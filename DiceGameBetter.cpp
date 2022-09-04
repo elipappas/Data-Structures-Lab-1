@@ -39,6 +39,7 @@ class Player
 private:
 	string name;
 	int score;
+	bool out;
 
 public:
 	Player(string p_name, int p_score)
@@ -88,8 +89,8 @@ public:
 		string p_name;
 		int p_score;
 
-		cout << "Number of players: ";
-		cin >> playerCount;
+		// cout << "Number of players: ";
+		// cin >> playerCount;
 
 		for (int i = 0; i < playerCount; i++)
 		{
@@ -99,13 +100,13 @@ public:
 			cout << "Enter player " << i + 1 << "'s score: ";
 			cin >> p_score;
 
-			Player player(p_name, p_score);
+			//Player player(p_name, p_score);
 
 			// cout << player.getName() << endl;
-			// players[i] = player;
+			players[i] = new Player(p_name,p_score);
 		}
 
-		cout << "Player 1 - " << players[1]->getName() << endl;
+		// cout << "Player 1 - " << players[1]->getName() << endl;
 		// cout << players[1]->getName() << endl;
 	}
 
@@ -113,7 +114,7 @@ public:
 	{
 		for (int j = 0; j < playerCount; j++)
 		{
-			cout << players[j] << ": " << players[j + 1] << endl;
+			cout << players[j]->getName() << ": " << players[j]->getScore() << endl;
 		}
 	}
 };
@@ -125,22 +126,36 @@ public:
 	{
 		int n;
 		int ns;
-		cout << "how many dice: " << endl;
+		
+		cout << "Number of players: ";
+		cin >> playerCount;
+
+		this->initPlayers();
+
+		cout << "how many dice: ";
 		cin >> n;
-		cout << "how many sides: " << endl;
+
+		cout << "how many sides: ";
 		cin >> ns;
+
 		Dice roll_n;
-		int knockOut_num = roll_n.roll(ns);
+		int knockOut_num = 0;
+		for(int i=0;i < n;i++){
+			knockOut_num = roll_n.roll(ns)+knockOut_num;
+		}
 		cout << "the knock out number is: " << knockOut_num << endl;
 		int score1 = 0;
+
 	}
 };
 
 int main(void)
 {
 	KnockOut Knock;
-	Knock.initPlayers();
+	Knock.play();
+	
 	// Dice test;
 	// cout << test.roll(6) << endl;
+
 	return 0;
 }
